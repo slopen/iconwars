@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import request from 'components/lib/request';
+import serverless from './serverless';
 
 type Props = {};
 type State = {
@@ -11,10 +12,12 @@ type State = {
 const LOAD_INT = 3000;
 const CHECK_INT = 60;
 
-const requestIcons = (): Promise <string []> =>
-	// $FlowFixMe
-	request ({uri: '/api/icons'});
+let serverFailure = false;
 
+const requestIcons = (): Promise <string []> =>
+	serverFailure
+		? serverless ()
+		: request ({uri: '/api/icons'});
 
 const Icon = ({icon}) =>
 	<div className="icon">
@@ -68,14 +71,9 @@ export default class Board extends Component <Props, State> {
 			const update = await requestIcons ();
 			const data = [...icons, update];
 
-			this.setState ({
-				icons: data
-			});
-
+			this.setState ({icons: data});
 		} catch (e) {
-			this.setState ({
-				error: e.message
-			});
+			serverFailure = true;
 		}
 	}
 
@@ -112,8 +110,10 @@ export default class Board extends Component <Props, State> {
 		return (
 			<div className="board">
 				<div id="content" className="content">
-					{icons && icons.map ((icons) =>
-						<IconsRow key={icons.join ()} icons={icons}/>
+					{icons && icons.map ((icons, index) =>
+						<IconsRow
+							icons={icons}
+							key={icons.join () + index}/>
 					)}
 				</div>
 			</div>
