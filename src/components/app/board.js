@@ -34,8 +34,8 @@ const IconsRow = ({icons}) =>
 
 export default class Board extends Component <Props, State> {
 
-	_t: IntervalID;
-	_checkT: IntervalID;
+	// _t: IntervalID;
+	// _checkT: IntervalID;
 
 	loadData: () => Promise <mixed>;
 	checkFirstItem: Function;
@@ -112,7 +112,7 @@ export default class Board extends Component <Props, State> {
 		return (
 			<div className="board">
 				<div id="content" className="content">
-					{icons && icons.map ((icons, index) =>
+					{icons && icons.map ((icons) =>
 						<IconsRow key={icons.join ()} icons={icons}/>
 					)}
 				</div>
