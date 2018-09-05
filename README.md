@@ -33,4 +33,4 @@ $ yarn run dev
 ### demo
 
 
-[view](https://rawgit.com/slopen/react-svg-chart/master/develop/build/client/index.html)
+[view](https://rawgit.com/slopen/iconwars/master/build/client/index.html)
